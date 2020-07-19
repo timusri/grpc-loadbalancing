@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/grpc-services: "grpc-server-service grpc"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"    
+  name: grpc-server-ingress
+spec:
+  rules:
+  - host: www.timus.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: grpc-server-service
+          servicePort: grpc
+  tls:
+  - secretName: test-tls
+    hosts:
+      - www.timus.com

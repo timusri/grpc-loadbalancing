@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grpc-server
+  labels:
+    app: grpc-server
+    type: python
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: grpc-server
+        type: python
+    spec:
+      containers:
+      - name: grpc-server
+        image: spacedreamer/grpc_loadbalancing:0.0.6
+        imagePullPolicy: Always
+        command:  [ 
+          "python" ,
+          "insecure-server.py"]
+        ports:
+        - containerPort: 50051
+          name: grpc 
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      

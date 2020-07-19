@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "timus.grpc";
+
+service Api{
+    rpc ApiEndpoint(ApiRequest)  returns (ApiResponse);   
+}
+
+message ApiRequest{
+	string name = 1;
+	string message = 2;
+}
+
+message ApiResponse{
+	string reply = 1;
+}
+
